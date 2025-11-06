@@ -1,64 +1,69 @@
+
 #include <stdio.h>
 
-int main(){
-    int a[101];
+int main (){
+     int a[101];
     int n;
     do{
-        printf("Nhap vao so luong san phan trong cua hang cua ban: ");
+        printf("Nhap vao so phan tu ban muon nhap la: ");
         scanf("%d",&n);
         if(n < 1 || n > 101){
-            printf("Loi! Hay nhap lai so luong san phan tron cua hang cua ban!");
+            printf("Loi! hay nhap lai so phan tu cua ban muon nhap!\n");
         }
     }while(n < 1 || n > 101);
+
     for(int i = 0; i < n; i++){
-        printf("Gia san phan co ma [%d]: ",i);
+        printf("arr[%d] = ",i);
         scanf("%d",&a[i]);
     }
-    printf("Gia cua cac san phan: \n\n");
-    for(int i = 0; i < n ; i++){
-        printf("Gia cua san phan co ma a[%d] la: %d Nghin(VND)\n",i,a[i]);
+    printf("Mang sau khi nhap la: \n");
+    for(int i = 0; i < n; i++){
+        printf("arr[%d] = %d     ",i, a[i]);
+    }
+    printf("\n\n");
+
+    int min = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] < min)
+            min = a[i];
+    }
+    printf("\nSo nho nhat trong mang la: %d\n", min);
+
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[minIndex])
+                minIndex = j;
+        }
+        int temp = a[i];
+        a[i] = a[minIndex];
+        a[minIndex] = temp;
     }
 
-    for(int i = 0; i < n; i++){
-        
-        for(int j = 0; j < n - i - 1; j++){
-            if(a[j] > a[j+1]){
-                int temp = a[j];
-                a[j] = a[j+1];
-                a[j+1] = temp;
-            }
-        }
-    }
-    printf("\n/===============================================/\n");
-    printf("Danh sach cac san phan theo gia ban tang dan la:\n");
-    printf("/===============================================/\n\n");
-    for(int i = 0; i < n; i++){
-        printf("Gia cua san phan co ma a[%d] la: %d Nghin(VND)\n",i,a[i]);
+    printf("\nMang sau khi sap xep tang dan: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
     }
     int key;
-    printf("Nhap ma san phan ma ban muon tim: ");
-    scanf("%d",&key);
+    printf("\n\nNhap so can tim: ");
+    scanf("%d", &key);
 
-    int left = 0;
-    int right = n-1;
-    int mid;
-    int flag = 0;
-    while(left <= right){
+    int left = 0, right = n - 1, mid, flag = 0;
+    while (left <= right) {
         mid = left + (right - left) / 2;
-        if(mid == key){
+        if (a[mid] == key) {
             flag = 1;
             break;
-        }else if(mid > key){
+        } else if (a[mid] > key) {
             right = mid - 1;
-        }else if(mid < key){
-            left  = mid + 1;
+        } else {
+            left = mid + 1;
         }
     }
-    if(flag){
-        printf("San pham ma a[%d] co trog cua hang",mid);
-    }else{
-        printf("San pham a[%d] khong co trong cua hang",mid);
-    }
 
+    if (flag)
+        printf("So %d duoc tim thay tai vi tri a[%d].", key, mid);
+    else
+        printf("So %d khong co trong mang.", key);
     return 0;
 }
